@@ -25,7 +25,7 @@ def objective(C):
 
 start_time = time.time()  
   
-search_space =  scope.int(hp.uniform('C', 1, 100))
+search_space =  scope.int(hp.uniform('C', 1, 1000))
 
 algo=tpe.suggest
 
