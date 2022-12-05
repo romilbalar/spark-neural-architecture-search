@@ -63,7 +63,7 @@ print('best param:',argmin)
 results.append(("multi node",argmin,time.time() - start_time))
 print("```````````````````````````````````````````````````````")
 
-with open('results.txt',w) as f:
+with open('results.txt','w') as f:
   for row in results:
     f.write("%s\n" % str(row))
 
