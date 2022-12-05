@@ -11,6 +11,8 @@ X, y = make_classification(n_samples=1000, n_features=4,
 
 from hyperopt import fmin, tpe, hp,  STATUS_OK, Trials
 
+results=[]
+
 def objective(C):
     # Create a support vector classifier model
     clf = RandomForestClassifier(max_depth=C, random_state=0)
@@ -36,7 +38,7 @@ argmin = fmin(
   max_evals=16)
 
 print('best param:',argmin)
-print("--- %s seconds ---" % (time.time() - start_time))
+results.append(("single node",argmin,time.time() - start_time))
 
 print("```````````````````````````````````````````````````````")
 
@@ -58,5 +60,10 @@ with mlflow.start_run():
     trials=spark_trials)
   
 print('best param:',argmin)
-print("--- %s seconds ---" % (time.time() - start_time))
+results.append(("multi node",argmin,time.time() - start_time))
 print("```````````````````````````````````````````````````````")
+
+with open('results.txt',w) as f:
+  for row in results:
+    f.write("%s\n" % str(row))
+
