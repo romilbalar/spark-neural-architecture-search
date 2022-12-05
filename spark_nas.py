@@ -5,8 +5,8 @@ from hyperopt import STATUS_OK
 from hyperopt.pyll import scope
 import time
 
-X, y = make_classification(n_samples=37500, n_features=7,
-                           n_informative=6, n_redundant=1,
+X, y = make_classification(n_samples=500, n_features=4,
+                           n_informative=3, n_redundant=1,
                            random_state=0, shuffle=False)
 
 from hyperopt import fmin, tpe, hp,  STATUS_OK, Trials
@@ -25,7 +25,7 @@ def objective(C):
 
 start_time = time.time()  
   
-search_space =  scope.int(hp.uniform('C', 10, 5000))
+search_space =  scope.int(hp.uniform('C', 1, 50))
 
 algo=tpe.suggest
 
