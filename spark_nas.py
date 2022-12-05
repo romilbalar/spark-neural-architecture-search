@@ -19,7 +19,7 @@ def objective(C):
     # Hyperopt tries to minimize the objective function. A higher accuracy value means a better model, so you must return the negative accuracy.
     return {'loss': -accuracy, 'status': STATUS_OK}
 
-search_space =  scope.int(hp.uniform('C', 1, 10))
+search_space =  scope.int(hp.uniform('C', 1, 100))
 
 algo=tpe.suggest
 
@@ -31,10 +31,10 @@ argmin = fmin(
   algo=algo,
   max_evals=16)
 
-print(argmin)
-print("```````````````````````````````````````````````````````'")
+print('best param:',argmin)
+print("```````````````````````````````````````````````````````")
 
-print('MULTI')
+print('MULTI-NODE')
 
 """Multi-node
 """
@@ -50,3 +50,6 @@ with mlflow.start_run():
     algo=algo,
     max_evals=16,
     trials=spark_trials)
+  
+print('best param:',argmin)
+print("```````````````````````````````````````````````````````")
