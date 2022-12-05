@@ -5,8 +5,8 @@ from hyperopt import STATUS_OK
 from hyperopt.pyll import scope
 import time
 
-X, y = make_classification(n_samples=1000, n_features=4,
-                           n_informative=2, n_redundant=0,
+X, y = make_classification(n_samples=10000, n_features=5,
+                           n_informative=3, n_redundant=2,
                            random_state=0, shuffle=False)
 
 from hyperopt import fmin, tpe, hp,  STATUS_OK, Trials
