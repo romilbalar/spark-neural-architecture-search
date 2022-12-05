@@ -3,6 +3,8 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import cross_val_score
 from hyperopt import STATUS_OK
 from hyperopt.pyll import scope
+import time
+
 X, y = make_classification(n_samples=1000, n_features=4,
                            n_informative=2, n_redundant=0,
                            random_state=0, shuffle=False)
@@ -19,6 +21,8 @@ def objective(C):
     # Hyperopt tries to minimize the objective function. A higher accuracy value means a better model, so you must return the negative accuracy.
     return {'loss': -accuracy, 'status': STATUS_OK}
 
+start_time = time.time()  
+  
 search_space =  scope.int(hp.uniform('C', 1, 100))
 
 algo=tpe.suggest
@@ -32,6 +36,8 @@ argmin = fmin(
   max_evals=16)
 
 print('best param:',argmin)
+print("--- %s seconds ---" % (time.time() - start_time))
+
 print("```````````````````````````````````````````````````````")
 
 print('MULTI-NODE')
@@ -42,7 +48,7 @@ print('MULTI-NODE')
 from hyperopt import SparkTrials
 import mlflow
 spark_trials = SparkTrials()
- 
+start_time = time.time()  
 with mlflow.start_run():
   argmin = fmin(
     fn=objective,
@@ -52,4 +58,5 @@ with mlflow.start_run():
     trials=spark_trials)
   
 print('best param:',argmin)
+print("--- %s seconds ---" % (time.time() - start_time))
 print("```````````````````````````````````````````````````````")
